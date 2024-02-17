@@ -10,7 +10,10 @@ public class FirstController {
 
     @GetMapping("/first")
     public  String firstms () {
-
         return  "Hello world";
+    }
+    @GetMapping("/second")
+    public  String second () {
+        return  "Hello world again";
     }
 }

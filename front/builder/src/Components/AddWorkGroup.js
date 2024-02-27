@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import LeftMenuAdmin from "./LeftMenuAdmin";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
@@ -8,18 +8,24 @@ function AddWorkGroup(props) {
 
     const [nameWorkGroup, setNameWorkGroup] = useState("");
     const [description, setDescription] = useState("");
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     function handleGroupWork() {
-    const url="http://localhost:8080/api/v1/admin/addGroupWork"
+        const url = "http://localhost:8080/api/v1/admin/addGroupWork"
         console.log(nameWorkGroup)
         console.log(description)
         axios.post(url, {
             name: nameWorkGroup,
-            description:  description
-        }, {headers: {
-            "Authorization": "Bearer "+localStorage.getItem("token")
-            }})
+            description: description
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
             .then(function (response) {
-
+                handleShow()
             })
             .catch(function (error) {
                 alert("ERROR OUR")
@@ -27,26 +33,41 @@ function AddWorkGroup(props) {
     }
 
     return (
-        <Row>
-            <Col sm={2}><LeftMenuAdmin/></Col>
-            <Col sm={10}>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Name WorkGroup</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Name Group Work" onChange={(e) => setNameWorkGroup(e.target.value)}/>
-                    </Form.Group>
+        <>
+            <Row>
+                <Col sm={2}><LeftMenuAdmin/></Col>
+                <Col sm={10}>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Name WorkGroup</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Name Group Work"
+                                          onChange={(e) => setNameWorkGroup(e.target.value)}/>
+                        </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Description" onChange={(e) => setDescription(e.target.value)}/>
-                    </Form.Group>
-                    <Button variant="primary" onClick={handleGroupWork}>
-                        Add Group Work
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Description"
+                                          onChange={(e) => setDescription(e.target.value)}/>
+                        </Form.Group>
+                        <Button variant="primary" onClick={handleGroupWork}>
+                            Add Group Work
+                        </Button>
+                    </Form>
+                </Col>
+
+            </Row>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Группа добавлена успешно</Modal.Title>
+                </Modal.Header>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
                     </Button>
-                </Form>
-            </Col>
-
-        </Row>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 

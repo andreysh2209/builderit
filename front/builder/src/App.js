@@ -6,6 +6,7 @@ import Home from "./Components/Home";
 import Link from "./Components/Link";
 import PanelAdmin from "./Components/PanelAdmin";
 import AddWorkGroup from "./Components/AddWorkGroup";
+import AddSubWorkGroup from "./Components/AddSubWorkGroup";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route exact path="/link" element={<Link/>}/>
                 <Route exact path="/admin" element={<PanelAdmin/>}/>
                 <Route exact path="/addWorkGroup" element={<AddWorkGroup/>}/>
+                <Route exact path="/addSubWorkGroup" element={<AddSubWorkGroup/>}/>
             </Routes>
         </Router>
     );

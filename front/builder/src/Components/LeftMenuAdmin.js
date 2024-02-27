@@ -11,7 +11,7 @@ function LeftMenuAdmin(props) {
                     <Nav.Link href="/addWorkGroup">AddWorkGroup</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link >AddSubGroup</Nav.Link>
+                    <Nav.Link href="/addSubWorkGroup">AddSubGroup</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link >AddTypeGroup</Nav.Link>

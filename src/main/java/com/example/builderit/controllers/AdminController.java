@@ -1,9 +1,7 @@
 package com.example.builderit.controllers;
 
 import com.example.builderit.dto.SubWorkGroupDto;
-import com.example.builderit.models.SubWorkGroup;
 import com.example.builderit.models.WorkGroup;
-import com.example.builderit.services.WorkGroupService;
 import com.example.builderit.services.impl.SubWorkGroupServiceImpl;
 import com.example.builderit.services.impl.WorkGroupServiceImpl;
 import lombok.RequiredArgsConstructor;

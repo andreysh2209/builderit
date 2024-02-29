@@ -19,7 +19,6 @@ public class SubWorkGroupServiceImpl implements SubWorkGroupService {
     public SubWorkGroupDto addSubWorkGroup(SubWorkGroupDto subWorkGroupDto) {
         SubWorkGroup convert = subWorkGroupDtoToSubWorkGroupConvector.convert(subWorkGroupDto);
         SubWorkGroup save = subWorkGroupRepository.save(convert);
-        SubWorkGroupDto subWorkGroupDtoResult = subWorkGroupToSubWorkGroupDtoConvertor.convert(save);
-        return subWorkGroupDtoResult;
+        return subWorkGroupToSubWorkGroupDtoConvertor.convert(save);
     }
 }

@@ -16,14 +16,12 @@ public class WorkGroupServiceImpl implements WorkGroupService {
 
     @Override
     public WorkGroup addWorkGroup(WorkGroup workGroup) {
-        WorkGroup save = workGroupRepository.save(workGroup);
-        return save;
+        return workGroupRepository.save(workGroup);
     }
 
     @Override
     public List <WorkGroup> getAll() {
-        List<WorkGroup> all = workGroupRepository.findAll();
 
-        return all;
+        return workGroupRepository.findAll();
     }
 }

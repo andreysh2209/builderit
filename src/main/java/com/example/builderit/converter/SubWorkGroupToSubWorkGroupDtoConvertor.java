@@ -2,11 +2,9 @@ package com.example.builderit.converter;
 
 import com.example.builderit.dto.SubWorkGroupDto;
 import com.example.builderit.models.SubWorkGroup;
-import com.example.builderit.models.WorkGroup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor

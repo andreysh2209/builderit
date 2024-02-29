@@ -10,13 +10,14 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,19 +30,20 @@ public class SecurityConfig {
         this.customUserDetailsService = customUserDetailsService;
     }
 
+    private static void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authorizationManagerRequestMatcherRegistry) {
+        authorizationManagerRequestMatcherRegistry
+                .requestMatchers("/api/v1/admin/").hasRole("ADMIN")
+                .requestMatchers("/auth", "/registration", "/api/v1/public/**")
+                .permitAll()
+                .anyRequest().authenticated();
+    }
+
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        SecurityContextLogoutHandler logoutHandler=new SecurityContextLogoutHandler();
         return http
                 .cors(Customizer.withDefaults())
-                .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
-                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-                    authorizationManagerRequestMatcherRegistry
-                            .requestMatchers("/api/v1/admin/").hasRole("ADMIN")
-                            .requestMatchers("/auth", "/registration","/api/v1/public/**")
-                            .permitAll()
-                            .anyRequest().authenticated();
-                })
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(SecurityConfig::customize)
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer

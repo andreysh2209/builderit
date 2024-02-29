@@ -50,7 +50,7 @@ function AddSubWorkGroup(props) {
             axios.post(url, {
                 name: nameSubWorkGroup,
                 description: description,
-                workGroupsID: workGroupsID
+                workGroupsId: workGroupsID
             }, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")

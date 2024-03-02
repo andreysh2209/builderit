@@ -1,8 +1,9 @@
 package com.example.builderit.controllers;
 
-import com.example.builderit.models.WorkGroup;
+import com.example.builderit.dto.WorkGroupDto;
 import com.example.builderit.services.WorkGroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import java.util.List;
 public class WorkGroupPublicController {
     private final WorkGroupService workGroupService;
     @GetMapping
-    public List<WorkGroup> workGroups () {
-       return workGroupService.getAll();
+    public ResponseEntity<List<WorkGroupDto>> workGroups () {
+       return ResponseEntity.ok(workGroupService.getAllWorkGroups());
     }
 }

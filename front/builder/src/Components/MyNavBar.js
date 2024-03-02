@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Button, Container, Form, Modal, Nav, Navbar} from "react-bootstrap";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
-import data from "bootstrap/js/src/dom/data";
 import styled from "styled-components";
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav {

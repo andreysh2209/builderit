@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Button, Col, Form, Modal, Row} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
 import LeftMenuAdmin from "./LeftMenuAdmin";
 
 function AddSubWorkGroup(props) {
@@ -24,26 +24,6 @@ function AddSubWorkGroup(props) {
             })
     }, [setWorkGroups]);
 
-
-    // function handleGroupWork() {
-    //     const url = "http://localhost:8080/api/v1/admin/addGroupWork"
-    //     console.log(nameWorkGroup)
-    //     console.log(description)
-    //     axios.post(url, {
-    //         name: nameWorkGroup,
-    //         description: description
-    //     }, {
-    //         headers: {
-    //             "Authorization": "Bearer " + localStorage.getItem("token")
-    //         }
-    //     })
-    //         .then(function (response) {
-    //             handleShow()
-    //         })
-    //         .catch(function (error) {
-    //             alert("ERROR OUR")
-    //         })
-    // }
 
     function handleSubGroupWork() {
         const url = "http://localhost:8080/api/v1/admin/addSubGroupWork"

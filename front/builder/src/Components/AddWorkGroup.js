@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import LeftMenuAdmin from "./LeftMenuAdmin";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
 
 function AddWorkGroup(props) {
 

@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 
 function LoadImage(props) {
     const [image, setImage] = useState();
+
     useEffect(() => {
-console.log(props.imageId)
-        const apiImage = 'http://localhost:8080/api/v1/public/image/'+props.imageId;
+        console.log(props.imageId)
+        const apiImage = 'http://localhost:8080/api/v1/public/image/' + props.imageId;
         fetch(apiImage)
             .then(res => res.blob())
             .then(blob => {

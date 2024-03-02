@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Col, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import axios from "axios";
+import {Link} from "react-router-dom";
 import LoadImage from "./LoadImage";
 
 function ListWorkGroups(props) {
@@ -18,24 +19,23 @@ function ListWorkGroups(props) {
             })
     }, [setWorkGroups]);
     return (
-       // <Container>
+        <Container style={{paddingTop: '2rem', paddingBottom: '2rem'}}>
             <Row>
-                {
-                    workGroups.map(item=>{
-                       <Col key={item.id}>
-                           <Card style={{ width: '18rem' }}>
-                               <LoadImage imageId={item.imageId} />
-                               <Card.Body>
-                                   <Card.Title>{item.name}</Card.Title>
-                                   <Card.Text>{item.description}</Card.Text>
-                                   <Button variant="primary">Go somewhere</Button>
-                               </Card.Body>
-                           </Card>
-                       </Col>
-                    })
-                }
+                {workGroups.map((d) => (
+                    <Col key={d.id}>
+                        <Card style={{width: '18rem', height: '26rem', marginTop: '2px'}}>
+                            <LoadImage imageId={d.imageId}/>
+                            <Card.Body>
+                                <Card.Title>{d.name}</Card.Title>
+                                <Card.Text>{d.description}</Card.Text>
+                                <Link> <Button
+                                    variant='primary'>Details</Button> </Link>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
             </Row>
-        // </Container>
+         </Container>
     );
 }
 

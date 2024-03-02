@@ -9,19 +9,20 @@ function AddWorkGroup(props) {
     const [nameWorkGroup, setNameWorkGroup] = useState("");
     const [description, setDescription] = useState("");
     const [show, setShow] = useState(false);
+    const [file, setFile] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     function handleGroupWork() {
         const url = "http://localhost:8080/api/v1/admin/addGroupWork"
-        console.log(nameWorkGroup)
-        console.log(description)
         axios.post(url, {
             name: nameWorkGroup,
-            description: description
+            description: description,
+            file:file
         }, {
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+                'content-type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
             }
         })
             .then(function (response) {
@@ -37,18 +38,26 @@ function AddWorkGroup(props) {
             <Row>
                 <Col sm={2}><LeftMenuAdmin/></Col>
                 <Col sm={10}>
+                    <h1 style={{color: "blueviolet"}}><b>Add Work Group</b></h1>
+                    <br/>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name WorkGroup</Form.Label>
                             <Form.Control type="text" placeholder="Enter Name Group Work"
                                           onChange={(e) => setNameWorkGroup(e.target.value)}/>
                         </Form.Group>
-
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Description</Form.Label>
                             <Form.Control type="text" placeholder="Enter Description"
                                           onChange={(e) => setDescription(e.target.value)}/>
                         </Form.Group>
+                        <Form.Group controlId="fromBasicImageWorkGroup">
+                            <Form.Label>Image</Form.Label>
+                            <Form.Control type="file" placeholder="Image"
+                                          onChange={(e) =>setFile(e.target.files[0])}
+                            />
+                        </Form.Group>
+                        <br/>
                         <Button variant="primary" onClick={handleGroupWork}>
                             Add Group Work
                         </Button>

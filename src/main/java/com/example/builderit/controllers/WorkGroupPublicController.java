@@ -19,6 +19,5 @@ public class WorkGroupPublicController {
     @GetMapping
     public List<WorkGroup> workGroups () {
        return workGroupService.getAll();
-
     }
 }

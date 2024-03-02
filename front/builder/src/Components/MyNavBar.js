@@ -3,7 +3,16 @@ import {Button, Container, Form, Modal, Nav, Navbar} from "react-bootstrap";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import data from "bootstrap/js/src/dom/data";
+import styled from "styled-components";
+const Styles = styled.div`
+  a, .navbar-brand, .navbar-nav {
+    color: #abd1b8;
 
+    &:hover {
+      color: white;
+    }
+  }
+`
 function MyNavBar(props) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -14,7 +23,7 @@ function MyNavBar(props) {
     const [username, setUsername] = useState(localStorage.getItem("username"));
     const [role, setRole] = useState(localStorage.getItem("role"));
     const [auth, setAuth] = useState(localStorage.getItem("auth"));
-
+    const [showRegistration, setShowRegistration] = useState(false);
     function handLogin() {
         const url = "http://localhost:8080/auth"
         axios.post(url, {
@@ -44,12 +53,29 @@ function MyNavBar(props) {
         setAuth("false")
 
     }
+    const handleShowRegistration = () => {  setShowRegistration(true)};
+
+    function handleRegistration(e) {
+        e.preventDefault();
+        axios.post("http://localhost:8080/registration", {
+            login: login,
+            password: password
+        }).then(function (response) {
+            handleRegistrationClose();
+        }).catch(function (error) {
+            console.log(error);
+            alert("Wrong credential")
+        });
+    }
+
+    function handleRegistrationClose() {setShowRegistration(false)};
 
     return (
         <>
+            <Styles>
             <Navbar expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">IT-BUILDER</Navbar.Brand>
+                    <Navbar.Brand href="/">IT-BUILDER</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
@@ -60,7 +86,7 @@ function MyNavBar(props) {
                             auth === "false"
                                 ? <>
                                     <Button variant="primary" className="me-2" onClick={handleShow}>Login</Button>
-                                    <Button variant="primary" className="me-2">Registration</Button>
+                                    <Button variant="primary" className="me-2" onClick={handleShowRegistration}>Registration</Button>
                                 </>
                                 : <>
                                 {
@@ -105,7 +131,33 @@ function MyNavBar(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+                <Modal show={showRegistration} onHide={handleRegistrationClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Registration</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="fromBasicTextReg">
+                                <Form.Label>Login</Form.Label>
+                                <Form.Control type="text" placeholder="Enter login"
+                                              onChange={(e) => setLogin(e.target.value)}/>
+                                <Form.Text className='text-muted'>We'll never share your login</Form.Text>
+                            </Form.Group>
+                            <Form.Group controlId="fromBasicPasswordReg">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Enter password"
+                                              onChange={(e) => setPassword(e.target.value)}/>
+                            </Form.Group>
+                            <Form.Group controlId="fromBasicCheckBox">
+                                <Form.Check type="checkbox" label="Remember me"/>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={handleRegistration}>Registration</Button>
+                    </Modal.Footer>
+                </Modal>
+            </Styles>
         </>
     );
 }

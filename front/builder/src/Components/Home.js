@@ -7,9 +7,9 @@ function Home(props) {
     return (
         <Row>
             <Col sm={2}><LeftMenu/></Col>
-            <Col sm={2} className="bg-info-subtle"></Col>
+            <Col sm={2} className="bg-light-subtle"></Col>
             <Col sm={6}><Slider/></Col>
-            <Col sm={2}></Col>
+            <Col sm={2} className="bg-light-subtle"></Col>
         </Row>
     );
 }

@@ -28,5 +28,6 @@ public class WorkGroup {
     @OneToMany (mappedBy = "workGroup", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SubWorkGroup> subWorkGroups = new ArrayList<>();
 
-
+    @OneToMany (mappedBy = "workGroup", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Image> images = new ArrayList<>();
 }

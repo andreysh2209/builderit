@@ -1,22 +1,23 @@
 package com.example.builderit.models;
 
+import com.example.builderit.enums.MeasurementType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="work_type")
+@Table(name = "materials")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
-public class WorkType {
+public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,8 +25,10 @@ public class WorkType {
     private String name;
     @Column(name = "code")
     private String code;
-    @ManyToOne (cascade = CascadeType.REFRESH )
-    private SubWorkGroup subWorkGroup;
-    @OneToMany (mappedBy = "workType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private MeasurementType measurementType;
+    @Column (name="price")
+    private Double price;
+    @OneToMany (mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkTypeMaterials> workTypeMaterials=new ArrayList<>();
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import LeftMenuAdmin from "./LeftMenuAdmin";
 
 function AddSubWorkGroup(props) {
@@ -27,6 +27,7 @@ function AddSubWorkGroup(props) {
 
     function handleSubGroupWork() {
         const url = "http://localhost:8080/api/v1/admin/addSubGroupWork"
+        if(validate()) {
             axios.post(url, {
                 name: nameSubWorkGroup,
                 description: description,
@@ -42,6 +43,16 @@ function AddSubWorkGroup(props) {
                 .catch(function (error) {
                     alert("ERROR OUR")
                 })
+        }
+        else {alert("Необходимо заполнить все поля")}
+    }
+
+    function validate() {
+        if (nameSubWorkGroup == null) return false;
+        if (nameSubWorkGroup.length < 1) return false;
+        if (description == null) return false;
+        if (description.length < 1) return false;
+        return true;
     }
 
     return (
@@ -49,19 +60,22 @@ function AddSubWorkGroup(props) {
             <Row>
                 <Col sm={2}><LeftMenuAdmin/></Col>
                 <Col sm={10}>
+                    <h1 style={{color: "royalblue"}}><b>Add Sub Work Group</b></h1>
+                    <br/>
                     <Form>
-                       <Form.Group className="mb-3" controlId="formBasicSelect">
-                           <Form.Label>Name WorkGroup</Form.Label>
-                           <Form.Select aria-label="Default select example" onChange={(e) => setWorkGroupsID(e.target.value)}>
+                        <Form.Group className="mb-3" controlId="formBasicSelect">
+                            <Form.Label>Name WorkGroup</Form.Label>
+                            <Form.Select aria-label="Default select example"
+                                         onChange={(e) => setWorkGroupsID(e.target.value)}>
 
-                               {
-                                   workGroups.map(item=>{
-                                       return(<option key={item.id} value={item.id}>{item.name}</option>)
-                                   })
-                               }
+                                {
+                                    workGroups.map(item => {
+                                        return (<option key={item.id} value={item.id}>{item.name}</option>)
+                                    })
+                                }
 
 
-                           </Form.Select>
+                            </Form.Select>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -83,16 +97,16 @@ function AddSubWorkGroup(props) {
 
             </Row>
 
-            {/*<Modal show={show} onHide={handleClose}>*/}
-            {/*    <Modal.Header closeButton>*/}
-            {/*        <Modal.Title>Группа добавлена успешно</Modal.Title>*/}
-            {/*    </Modal.Header>*/}
-            {/*    <Modal.Footer>*/}
-            {/*        <Button variant="secondary" onClick={handleClose}>*/}
-            {/*            Close*/}
-            {/*        </Button>*/}
-            {/*    </Modal.Footer>*/}
-            {/*</Modal>*/}
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Подгруппа добавлена успешно</Modal.Title>
+                </Modal.Header>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }

@@ -5,31 +5,41 @@ import axios from "axios";
 
 function AddWorkGroup(props) {
 
-    const [nameWorkGroup, setNameWorkGroup] = useState("");
+    const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [show, setShow] = useState(false);
     const [file, setFile] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    function handleGroupWork() {
-        const url = "http://localhost:8080/api/v1/admin/addGroupWork"
-        axios.post(url, {
-            name: nameWorkGroup,
-            description: description,
-            file:file
-        }, {
-            headers: {
-                'content-type': 'multipart/form-data',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-            .then(function (response) {
-                handleShow()
-            })
-            .catch(function (error) {
-                alert("ERROR OUR")
-            })
+    function handleGroupWork(e) {
+        e.preventDefault()
+        const url = 'http://localhost:8080/api/v1/admin/addGroupWork';
+        if (validate()){
+            axios.post(url, {
+                name: name,
+                description: description,
+                file:file
+            }, {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
+            }).then(resp => console.log(resp))
+                .catch(err=>alert("Такая категория уже существует"))
+        } else {alert("Необходимо заполнить все поля")}
+    }
+
+    function validate(){
+        console.log(name)
+        if(name==null) return false;
+        if(name.length<1) return false;
+        console.log(description)
+        if(description==null) return false;
+        if(description.length<1) return false;
+        console.log(file)
+        if(file==null) return false;
+        return true;
     }
 
     return (
@@ -43,7 +53,7 @@ function AddWorkGroup(props) {
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Name WorkGroup</Form.Label>
                             <Form.Control type="text" placeholder="Enter Name Group Work"
-                                          onChange={(e) => setNameWorkGroup(e.target.value)}/>
+                                          onChange={(e) => setName(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Description</Form.Label>

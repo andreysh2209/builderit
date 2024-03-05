@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Container, Form, Modal, Nav, Navbar} from "react-bootstrap";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav {
     color: #abd1b8;
@@ -23,6 +24,29 @@ function MyNavBar(props) {
     const [role, setRole] = useState(localStorage.getItem("role"));
     const [auth, setAuth] = useState(localStorage.getItem("auth"));
     const [showRegistration, setShowRegistration] = useState(false);
+    const navigate = useNavigate()
+    const goHome = () => navigate("/")
+
+    useEffect(() => {
+        if (localStorage.getItem("token") == null && localStorage.getItem("token") === "No" ) {
+            setAuth("false")
+            goHome()
+        } else {
+            const token = localStorage.getItem('token')
+            try {
+                const decoded = jwtDecode(token);
+                const expiration = new Date(decoded.exp * 1000)
+                console.log(expiration - new Date().getTime())
+                if (expiration < new Date().getTime()) {
+                    setAuth("false");
+                    localStorage.setItem("auth", "false")
+                    goHome()
+                }
+            } catch (e) {
+                goHome()
+            }
+        }
+    }, []);
     function handLogin() {
         const url = "http://localhost:8080/auth"
         axios.post(url, {
@@ -38,6 +62,7 @@ function MyNavBar(props) {
                 setUsername(decode.sub)
                 setRole(decode.roles[0])
                 setAuth("true")
+                goHome()
                 handleClose()
             })
             .catch(function (error) {
@@ -50,6 +75,7 @@ function MyNavBar(props) {
         setUsername("")
         setRole("")
         setAuth("false")
+        goHome()
 
     }
     const handleShowRegistration = () => {  setShowRegistration(true)};

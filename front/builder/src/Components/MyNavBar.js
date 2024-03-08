@@ -4,6 +4,7 @@ import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import logo from "../logo.png"
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav {
     color: #abd1b8;
@@ -100,7 +101,16 @@ function MyNavBar(props) {
             <Styles>
             <Navbar expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/">IT-BUILDER</Navbar.Brand>
+                    <Navbar.Brand href='/'>
+                        <img
+                            src={logo}
+                            height="30"
+                            width="60"
+                            className='d-inline-block align-top mx-3'
+                            alt="Logo"
+                        />
+                        BUILDER
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">

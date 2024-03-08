@@ -28,4 +28,6 @@ public class WorkType {
     private SubWorkGroup subWorkGroup;
     @OneToMany (mappedBy = "workType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkTypeMaterials> workTypeMaterials=new ArrayList<>();
+    @OneToMany (mappedBy = "workType", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<LaborHour> laborCosts=new ArrayList<>();
 }

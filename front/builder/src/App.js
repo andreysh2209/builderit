@@ -9,6 +9,8 @@ import Link from "./Components/Link";
 import PanelAdmin from "./Components/PanelAdmin";
 import AddWorkGroup from "./Components/AddWorkGroup";
 import AddSubWorkGroup from "./Components/AddSubWorkGroup";
+import AddWorkType from "./Components/AddWorkType";
+import AddMaterial from "./Components/AddMaterial";
 
 function App() {
   return (
@@ -17,19 +19,12 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home/>}/>
           <Route exact path="/link" element={<Link/>}/>
-          {/*<Route exact path="/about" element={<About/>}/>*/}
           <Route exact path="/admin" element={<PanelAdmin/>}/>
           <Route exact path="/addWorkGroup" element={<AddWorkGroup/>}/>
           <Route exact path="/addSubWorkGroup" element={<AddSubWorkGroup/>}/>
-          {/*<Route exact path="/addComponent" element={<AddComponentForm/>}/>*/}
-          {/*<Route exact path="/addProduct" element={<AddProduct/>}/>*/}
-          {/*<Route exact path="/getListProduct" element={<ListProducts/>}/>*/}
-          {/*<Route exact path="/departDetails/:id" element={<DepartDetails/>} />*/}
-          {/*<Route exact path="/basket" element={<MyBasket/>} />*/}
-          {/*<Route exact path="/getListComponents" element={<ListComponents/>} />*/}
-          {/*<Route exact path="/sales" element={<Sales/>} />*/}
+          <Route exact path="/addWorkType" element={<AddWorkType/>}/>
+          <Route exact path="/addMaterial" element={<AddMaterial/>}/>
         </Routes>
-        {/*<Footer/>*/}
       </Router>
   );
 }

@@ -1,8 +1,10 @@
 package com.example.builderit.controllers;
 
+import com.example.builderit.dto.MaterialDto;
 import com.example.builderit.dto.SubWorkGroupDto;
 import com.example.builderit.dto.WorkGroupDto;
 import com.example.builderit.models.WorkGroup;
+import com.example.builderit.services.impl.MaterialServiceImpl;
 import com.example.builderit.services.impl.SubWorkGroupServiceImpl;
 import com.example.builderit.services.impl.WorkGroupServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +25,18 @@ public class AdminController {
 
     private  final WorkGroupServiceImpl workGroupService;
     private final SubWorkGroupServiceImpl subWorkGroupService;
+    private final MaterialServiceImpl materialService;
     @PostMapping ("/addGroupWork")
     public ResponseEntity<List<WorkGroupDto>> addWorkGroup (WorkGroup workGroup, MultipartFile file) throws IOException {
         return ResponseEntity.ok( workGroupService.addWorkGroup(workGroup, file))  ;
 
     }
-
     @PostMapping ("/addSubGroupWork")
     public SubWorkGroupDto addSubWorkGroup (@RequestBody SubWorkGroupDto subWorkGroupDto) {
         return subWorkGroupService.addSubWorkGroup(subWorkGroupDto);
-
     }
-
+    @PostMapping ("/addMaterial")
+    public MaterialDto addMaterial (@RequestBody MaterialDto materialDto) {
+        return materialService.addMaterial(materialDto);
+    }
 }

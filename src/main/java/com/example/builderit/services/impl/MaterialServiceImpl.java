@@ -10,6 +10,7 @@ import com.example.builderit.services.MaterialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,5 +33,15 @@ public class MaterialServiceImpl implements MaterialService {
     public MaterialDto addMaterial(MaterialDto materialDto) {
         Material save = materialRepository.save(materialDtoToMaterialConvertor.convert(materialDto));
         return materialToMaterialDtoConvertor.convert(save);
+    }
+
+    @Override
+    public List<MaterialDto> getMaterials() {
+        List <MaterialDto> materialDtos=new ArrayList<>();
+        for (Material material : materialRepository.findAll()) {
+            MaterialDto materialDto = materialToMaterialDtoConvertor.convert(material);
+            materialDtos.add(materialDto);
+        }
+        return materialDtos;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.builderit.controllers;
 
+import com.example.builderit.dto.MaterialDto;
 import com.example.builderit.enums.MeasurementType;
 import com.example.builderit.services.impl.MaterialServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class MaterialController {
     @GetMapping("/measurementTypes")
     public ResponseEntity<List<String>> getMeasurementTypes(){
         return ResponseEntity.ok(materialService.getMeasurementTypes());
+
+    }
+    @GetMapping()
+    public ResponseEntity<List<MaterialDto>> getMaterials(){
+        return ResponseEntity.ok(materialService.getMaterials());
 
     }
 }

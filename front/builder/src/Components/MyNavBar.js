@@ -37,7 +37,6 @@ function MyNavBar(props) {
             try {
                 const decoded = jwtDecode(token);
                 const expiration = new Date(decoded.exp * 1000)
-                console.log(expiration - new Date().getTime())
                 if (expiration < new Date().getTime()) {
                     setAuth("false");
                     localStorage.setItem("auth", "false")

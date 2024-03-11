@@ -9,6 +9,9 @@ import com.example.builderit.services.SubWorkGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class SubWorkGroupServiceImpl implements SubWorkGroupService {
@@ -20,5 +23,14 @@ public class SubWorkGroupServiceImpl implements SubWorkGroupService {
         SubWorkGroup convert = subWorkGroupDtoToSubWorkGroupConvector.convert(subWorkGroupDto);
         SubWorkGroup save = subWorkGroupRepository.save(convert);
         return subWorkGroupToSubWorkGroupDtoConvertor.convert(save);
+    }
+
+    @Override
+    public List<SubWorkGroupDto> getSubWorkGroupsByWorkGroup(Long workGroupId) {
+        List<SubWorkGroup> allByWorkGroupId = subWorkGroupRepository.findAllByWorkGroupId(workGroupId);
+        return allByWorkGroupId
+                .stream()
+                .map(subWorkGroupToSubWorkGroupDtoConvertor::convert)
+                .toList();
     }
 }

@@ -11,7 +11,6 @@ function ListWorkGroups(props) {
         axios.get(url)
             .then(function (response) {
                 setWorkGroups(response.data)
-                console.log(response.data)
             })
 
             .catch(function (error) {

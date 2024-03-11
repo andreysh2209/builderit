@@ -13,4 +13,5 @@ public class MaterialDto {
     private String code;
     private String measurementType;
     private Double price;
+    private Double qnt;
 }

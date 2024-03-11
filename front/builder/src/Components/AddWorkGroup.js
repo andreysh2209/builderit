@@ -25,16 +25,19 @@ function AddWorkGroup(props) {
                     'content-type': 'multipart/form-data',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 }
-            }).then(resp => handleShow())
+            }).then(resp => console.log(resp))
                 .catch(err=>alert("Такая категория уже существует"))
         } else {alert("Необходимо заполнить все поля")}
     }
 
     function validate(){
+        console.log(name)
         if(name==null) return false;
         if(name.length<1) return false;
+        console.log(description)
         if(description==null) return false;
         if(description.length<1) return false;
+        console.log(file)
         if(file==null) return false;
         return true;
     }
@@ -44,7 +47,7 @@ function AddWorkGroup(props) {
             <Row>
                 <Col sm={2}><LeftMenuAdmin/></Col>
                 <Col sm={10}>
-                    <h1 style={{color: "royalblue"}}><b>Add Work Group</b></h1>
+                    <h1 style={{color: "blueviolet"}}><b>Add Work Group</b></h1>
                     <br/>
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkTypeServiceImpl implements WorkTypeService {
     @Override
-    public MaterialDto addWorkType(WorkTypeDto workTypeDto) {
+    public WorkTypeDto addWorkType(WorkTypeDto workTypeDto) {
         return null;
     }
 }

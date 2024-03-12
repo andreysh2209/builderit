@@ -43,7 +43,7 @@ public class AdminController {
         return materialService.addMaterial(materialDto);
     }
     @PostMapping ("/addWorkType")
-    public MaterialDto addWorkType (@RequestBody WorkTypeDto workTypeDto) {
+    public WorkTypeDto addWorkType (@RequestBody WorkTypeDto workTypeDto) {
         return workTypeService.addWorkType(workTypeDto);
     }
 }

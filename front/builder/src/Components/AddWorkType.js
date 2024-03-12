@@ -231,18 +231,18 @@ function AddWorkType(props) {
                         </Form.Group>
                         <Form.Group controlId="fromBasicText2">
                             <Form.Label>labor Hour Of Machinist</Form.Label>
-                            <Form.Control type="text" placeholder="Enter labor Hour Of Machinist" min='0' step='0.01'
+                            <Form.Control type="number" placeholder="Enter labor Hour Of Machinist" min='0' step='0.01'
                                           onChange={(e) => setLaborHourOfMachinist(e.target.value)}/>
                         </Form.Group>
                         <Form.Group controlId="fromBasicText3">
                             <Form.Label>Depreciation Of Machines</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Depreciation Of Machines" min='0' step='0.01'
+                            <Form.Control type="number" placeholder="Enter Depreciation Of Machines" min='0' step='0.01'
                                           onChange={(e) => setDepreciationOfMachines(e.target.value)}/>
                         </Form.Group>
                         <Form.Group>
                             <br/>
                             <Button variant="primary" onClick={(e) => {
-                                handleShowAddLaborHourAndDepreciationOfMachines()
+                                handleCloseAddLaborHourAndDepreciationOfMachines()
                             }}>Add LaborHour And DepreciationOfMachines</Button>
                         </Form.Group>
                     </Form>

@@ -21,7 +21,7 @@ public class LaborHour {
     @Column(name = "labor_hour_of_machinist")
     private Double laborHourOfMachinist;
     @Column(name = "depreciation_of_machines")
-    private Double DepreciationOfMachines;
+    private Double depreciationOfMachines;
     @ManyToOne (cascade = CascadeType.REFRESH )
     private WorkType workType;
 }

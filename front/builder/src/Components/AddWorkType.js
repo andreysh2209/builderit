@@ -14,9 +14,25 @@ function AddWorkType(props) {
     const [workGroupId, setWorkGroupId] = useState(0);
     const [subWorkGroupId, setSubWorkGroupId] = useState(0);
     const [qnt, setQnt] = useState()
+    const [name, setName] = useState()
+    const [code, setCode] = useState()
+    const [laborHourOfWorker, setLaborHourOfWorker] = useState()
+    const [laborHourOfMachinist, setLaborHourOfMachinist] = useState()
+    const [depreciationOfMachines, setDepreciationOfMachines] = useState()
     const [showAddMaterial, setShowAddMaterial] = useState(false)
+    const [showAddLaborHourAndDepreciationOfMachines, setShowAddLaborHourAndDepreciationOfMachines] = useState(false)
     const [selectedData, setSelectedData] = React.useState([]);
 
+
+
+    function handleAddLaborHourAndDepreciationOfMachines() {
+      return {
+          laborHourOfWorker: laborHourOfWorker,
+          laborHourOfMachinist: laborHourOfMachinist,
+          depreciationOfMachines : depreciationOfMachines
+      }
+
+    }
 
     const columns = [
         {name: "ID", selector: row => row.id, sortable: true},
@@ -25,23 +41,22 @@ function AddWorkType(props) {
         {name: "Measurement Type", selector: row => row.measurementType, sortable: true},
         {name: "Price", selector: row => row.price, sortable: true},
         {
-            name: "Quantity",selector: row => row.qnt, input: true, cell: row => <Input type='number' min="0" step="0.01" placeholder="Enter qnt"
-                                                              onChange={
-                (e) =>{
-                    row.qnt=e.target.value
-                    materials.map(el=>el.id===row.id ? el.qnt=row.qnt : el )
-                    console.log(materials)
-                }
-            }
+            name: "Quantity",
+            selector: row => row.qnt,
+            input: true,
+            cell: row => <Input type='number' min="0" step="0.01" placeholder="Enter qnt"
+                                onChange={
+                                    (e) => {
+                                        row.qnt = e.target.value
+                                        materials.map(el => el.id === row.id ? el.qnt = row.qnt : el)
+                                        console.log(materials)
+                                    }
+                                }
             />
         }
 
     ]
 
-    let materialId
-    let nameMaterial;
-    let measurementType;
-    let price;
     useEffect(() => {
         const url = "http://localhost:8080/api/v1/materials"
         axios.get(url,
@@ -83,6 +98,7 @@ function AddWorkType(props) {
 
                 console.log(response.data)
                 setSubWorkGroups(response.data)
+                setSubWorkGroupId(response.data[0].id)
             })
             .catch(function (error) {
                 alert("ERROR OUR")
@@ -91,18 +107,28 @@ function AddWorkType(props) {
     }
 
     function handleAdd() {
-            console.log(selectedData)
+        let laborHour= {
+            laborHourOfWorker: laborHourOfWorker,
+            laborHourOfMachinist: laborHourOfMachinist,
+            depreciationOfMachines : depreciationOfMachines
+        }
+        console.log(laborHour)
+        console.log(selectedData)
 
         const url = 'http://localhost:8080/api/v1/admin/addWorkType';
 
-            axios.post(url, {
-                materials: selectedData
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                }
-            }).then(resp => console.log(resp))
-                .catch(err=>alert("Такая категория уже существует"))
+        axios.post(url, {
+            name: name,
+            code: code,
+            subWorkGroupId: subWorkGroupId,
+            laborHour:laborHour,
+            materials: selectedData
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+            }
+        }).then(resp => console.log(resp))
+            .catch(err => alert("Такая категория уже существует"))
 
     }
 
@@ -113,10 +139,20 @@ function AddWorkType(props) {
     function handleShowAddMaterial() {
         setShowAddMaterial(true)
     }
+
+    function handleShowAddLaborHourAndDepreciationOfMachines() {
+        setShowAddLaborHourAndDepreciationOfMachines(true)
+    }
+
+    function handleCloseAddLaborHourAndDepreciationOfMachines() {
+        setShowAddLaborHourAndDepreciationOfMachines(false)
+    }
+
     const handleSelected = ({selectedRows}) => {
         setSelectedData(selectedRows);
         console.log({selectedRows});
     };
+
 
     return (
         <>
@@ -151,14 +187,68 @@ function AddWorkType(props) {
                                 }
                             </Form.Select>
                         </Form.Group>
-                        <Button variant="primary" onClick={(e) => {
-                            handleShowAddMaterial()
-                        }}>Add material</Button>
+                        <Form.Group controlId="fromBasicText1">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" placeholder="Enter name"
+                                          onChange={(e) => setName(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group controlId="fromBasicText2">
+                            <Form.Label>Code</Form.Label>
+                            <Form.Control type="text" placeholder="Enter code"
+                                          onChange={(e) => setCode(e.target.value)}/>
+                        </Form.Group>
+
+                        <Form.Group>
+                            <br/>
+                            <Button variant="primary" onClick={(e) => {
+                                handleShowAddLaborHourAndDepreciationOfMachines()
+                            }}>Add LaborHour And DepreciationOfMachines</Button>
+                        </Form.Group>
+                        <Form.Group>
+                            <br/>
+                            <Button variant="primary" onClick={(e) => {
+                                handleShowAddMaterial()
+                            }}>Add material</Button>
+                        </Form.Group>
 
                     </Form>
                 </Col>
 
             </Row>
+
+
+            <Modal show={showAddLaborHourAndDepreciationOfMachines}
+                   onHide={handleCloseAddLaborHourAndDepreciationOfMachines} size={"xl"}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add LaborHour And DepreciationOfMachines </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="fromBasicText1">
+                            <Form.Label>labor Hour Of Worker</Form.Label>
+                            <Form.Control type="number" placeholder="Enter labor Hour Of Workere" min='0' step='0.01'
+                                          onChange={(e) => setLaborHourOfWorker(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group controlId="fromBasicText2">
+                            <Form.Label>labor Hour Of Machinist</Form.Label>
+                            <Form.Control type="text" placeholder="Enter labor Hour Of Machinist" min='0' step='0.01'
+                                          onChange={(e) => setLaborHourOfMachinist(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group controlId="fromBasicText3">
+                            <Form.Label>Depreciation Of Machines</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Depreciation Of Machines" min='0' step='0.01'
+                                          onChange={(e) => setDepreciationOfMachines(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group>
+                            <br/>
+                            <Button variant="primary" onClick={(e) => {
+                                handleShowAddLaborHourAndDepreciationOfMachines()
+                            }}>Add LaborHour And DepreciationOfMachines</Button>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+
+            </Modal>
             <Modal show={showAddMaterial} onHide={handleCloseAddMaterial} size={"xl"}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Material </Modal.Title>
@@ -177,7 +267,6 @@ function AddWorkType(props) {
                     <Button variant='primary' onClick={handleAdd}>Add</Button>
                 </Modal.Footer>
             </Modal>
-
         </>
     );
 }

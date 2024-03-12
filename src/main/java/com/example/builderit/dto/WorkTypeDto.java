@@ -10,6 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkTypeDto {
+    private Long id;
+    private String name;
+    private String code;
+    private Long subWorkGroupId;
+    private LaborHourDto laborHour;
     private List<MaterialDto> materials;
 
 }

@@ -114,7 +114,7 @@ function AddWorkType(props) {
         }
         console.log(laborHour)
         console.log(selectedData)
-
+        handleCloseAddMaterial()
         const url = 'http://localhost:8080/api/v1/admin/addWorkType';
 
         axios.post(url, {

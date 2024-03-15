@@ -31,4 +31,6 @@ public class Material {
     private Double price;
     @OneToMany (mappedBy = "material", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkTypeMaterials> workTypeMaterials=new ArrayList<>();
+    @ManyToOne (cascade = CascadeType.REFRESH )
+    private  SubCategoryMaterial subCategoryMaterial;
 }

@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaterialDto {
+public class SubCategoryMaterialDto {
     private Long id;
     private String name;
-    private String code;
-    private String measurementType;
-    private Double price;
-    private Double qnt;
-    private Long subCategoryId;
+    private String description;
+    private Long categoryMaterialId;
+    List<MaterialDto> materialDto=new ArrayList<>();
 }

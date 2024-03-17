@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CategoryMaterialService {
-    List<CategoryMaterialDto> addCategoryMaterial (CategoryMaterial categoryMaterial);
+    CategoryMaterialDto addCategoryMaterial (CategoryMaterialDto categoryMaterialDto);
 
     List<CategoryMaterialDto> getAllCategoryMaterials();
 }

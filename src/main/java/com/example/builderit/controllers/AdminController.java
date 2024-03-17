@@ -1,14 +1,8 @@
 package com.example.builderit.controllers;
 
-import com.example.builderit.dto.MaterialDto;
-import com.example.builderit.dto.SubWorkGroupDto;
-import com.example.builderit.dto.WorkGroupDto;
-import com.example.builderit.dto.WorkTypeDto;
+import com.example.builderit.dto.*;
 import com.example.builderit.models.WorkGroup;
-import com.example.builderit.services.impl.MaterialServiceImpl;
-import com.example.builderit.services.impl.SubWorkGroupServiceImpl;
-import com.example.builderit.services.impl.WorkGroupServiceImpl;
-import com.example.builderit.services.impl.WorkTypeServiceImpl;
+import com.example.builderit.services.impl.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +23,7 @@ public class AdminController {
     private final SubWorkGroupServiceImpl subWorkGroupService;
     private final MaterialServiceImpl materialService;
     private final WorkTypeServiceImpl workTypeService;
+    private final CategoryMaterialServiceImpl categoryMaterialService;
     @PostMapping ("/addGroupWork")
     public ResponseEntity<List<WorkGroupDto>> addWorkGroup (WorkGroup workGroup, MultipartFile file) throws IOException {
         return ResponseEntity.ok( workGroupService.addWorkGroup(workGroup, file))  ;
@@ -45,5 +40,9 @@ public class AdminController {
     @PostMapping ("/addWorkType")
     public WorkTypeDto addWorkType (@RequestBody WorkTypeDto workTypeDto) {
         return workTypeService.addWorkType(workTypeDto);
+    }
+    @PostMapping ("/addCategoryMaterial")
+    public CategoryMaterialDto addCategoryMaterial (@RequestBody CategoryMaterialDto categoryMaterialDto) {
+        return categoryMaterialService.addCategoryMaterial(categoryMaterialDto);
     }
 }

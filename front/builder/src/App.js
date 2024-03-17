@@ -11,6 +11,7 @@ import AddWorkGroup from "./Components/AddWorkGroup";
 import AddSubWorkGroup from "./Components/AddSubWorkGroup";
 import AddWorkType from "./Components/AddWorkType";
 import AddMaterial from "./Components/AddMaterial";
+import AddCategoryMaterial from "./Components/AddCategoryMaterial";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/addSubWorkGroup" element={<AddSubWorkGroup/>}/>
           <Route exact path="/addWorkType" element={<AddWorkType/>}/>
           <Route exact path="/addMaterial" element={<AddMaterial/>}/>
+          <Route exact path="/addCategoryMaterial" element={<AddCategoryMaterial/>}/>
         </Routes>
       </Router>
   );

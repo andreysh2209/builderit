@@ -2,6 +2,7 @@ package com.example.builderit.services.impl;
 
 import com.example.builderit.converter.MaterialDtoToMaterialConvertor;
 import com.example.builderit.converter.MaterialToMaterialDtoConvertor;
+import com.example.builderit.dto.CategoryMaterialDto;
 import com.example.builderit.dto.MaterialDto;
 import com.example.builderit.enums.MeasurementType;
 import com.example.builderit.models.Material;

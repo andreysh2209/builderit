@@ -18,6 +18,9 @@ function LeftMenuAdmin(props) {
                     <Nav.Link href="/addCategoryMaterial"><h2>AddCategoryMaterial</h2></Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
+                    <Nav.Link href="/addSubCategoryMaterial"><h2>AddSubCategoryMaterial</h2></Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
                     <Nav.Link href="/addMaterial"><h2>AddMaterial</h2></Nav.Link>
                 </Nav.Item>
             </Nav>

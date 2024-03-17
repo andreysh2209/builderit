@@ -1,23 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, Modal, Row} from "react-bootstrap";
 import LeftMenuAdmin from "./LeftMenuAdmin";
 import axios from "axios";
 
-function AddCategoryMaterial(props) {
+function AddSubCategoryMaterial(props) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [show, setShow] = useState(false);
+    const [categories, setCategories]=useState([])
+    const [category, setCategory]=useState()
     const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true)
     };
 
-    function handleAddCategoryMaterial() {
-        const url = "http://localhost:8080/api/v1/admin/addCategoryMaterial"
+    function handleAddSubCategoryMaterial() {
+        const url = "http://localhost:8080/api/v1/admin/addSubCategoryMaterial"
         if (validate()) {
             axios.post(url, {
                 name: name,
-                description: description
+                description: description,
+                categoryMaterialId :category
 
             }, {
                 headers: {
@@ -41,29 +44,56 @@ function AddCategoryMaterial(props) {
         if (description.length < 1) return false;
         return true;
     }
+
+    useEffect(() => {
+        const url = "http://localhost:8080/api/v1/public/categoryMaterial"
+        axios.get(url, {
+                // headers: {
+                //     "Authorization": "Bearer " + localStorage.getItem("token")
+                // }
+            }
+        )
+            .then(function (response) {
+                setCategories(response.data)
+                setCategory(response.data[0].id)
+            })
+            .catch(function (error) {
+               console.log(error)
+            })
+    }, [setCategories]);
+
     return (
         <>
             <Row>
                 <Col sm={2}><LeftMenuAdmin/></Col>
-                <Col sm={1}></Col>
+                <Col sm={1}> </Col>
                 <Col sm={9}>
-                    <h1 style={{color: "royalblue"}}><b>Add Category Material</b></h1>
-                    <br/>
+                    <h1 style={{color: "royalblue"}}><b>Add SubCategory Material</b></h1>
                     <Form>
+                        <Form.Group controlId="fromBasicText7">
+                            <Form.Label>Category Material</Form.Label>
+                            <Form.Select
+                                onChange={(e => setCategory(e.target.value))}
+                            >
+                                {categories.map(item => {
+                                    return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                })}
+                            </Form.Select>
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicName">
-                            <Form.Label>Name Category Material</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Name Category Material"
+                            <Form.Label>Name Sub Category Material</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Name Sub Category Material"
                                           onChange={(e) => setName(e.target.value)}/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicCode">
-                            <Form.Label>Description Category</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Description Category"
+                            <Form.Label>Description Sub Category</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Description Sub Category"
                                           onChange={(e) => setDescription(e.target.value)}/>
                         </Form.Group>
 
                         <br/>
-                        <Button variant="primary" onClick={handleAddCategoryMaterial}>
-                            Add Category Material
+                        <Button variant="primary" onClick={handleAddSubCategoryMaterial}>
+                            Add Sub Category Material
                         </Button>
                     </Form>
                 </Col>
@@ -82,4 +112,4 @@ function AddCategoryMaterial(props) {
     );
 }
 
-export default AddCategoryMaterial;
+export default AddSubCategoryMaterial;

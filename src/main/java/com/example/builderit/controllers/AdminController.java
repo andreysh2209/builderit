@@ -24,6 +24,7 @@ public class AdminController {
     private final MaterialServiceImpl materialService;
     private final WorkTypeServiceImpl workTypeService;
     private final CategoryMaterialServiceImpl categoryMaterialService;
+    private final SubCategoryMaterialServiceImpl subCategoryMaterialService;
     @PostMapping ("/addGroupWork")
     public ResponseEntity<List<WorkGroupDto>> addWorkGroup (WorkGroup workGroup, MultipartFile file) throws IOException {
         return ResponseEntity.ok( workGroupService.addWorkGroup(workGroup, file))  ;
@@ -44,5 +45,10 @@ public class AdminController {
     @PostMapping ("/addCategoryMaterial")
     public CategoryMaterialDto addCategoryMaterial (@RequestBody CategoryMaterialDto categoryMaterialDto) {
         return categoryMaterialService.addCategoryMaterial(categoryMaterialDto);
+    }
+
+    @PostMapping ("/addSubCategoryMaterial")
+    public SubCategoryMaterialDto addCategoryMaterial (@RequestBody SubCategoryMaterialDto subCategoryMaterialDto) {
+        return subCategoryMaterialService.addSubCategoryMaterial(subCategoryMaterialDto);
     }
 }

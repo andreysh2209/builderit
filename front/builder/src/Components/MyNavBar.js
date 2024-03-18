@@ -128,7 +128,9 @@ function MyNavBar(props) {
                                     ?
                                         <Button variant="success" className="me-2" href="/admin">Panel Admin </Button>
                                         :
-                                        <> </>
+                                        <>
+                                        <Button variant='success' className='me-2' href="/panelUser">My apartment</Button>
+                                        </>
                                 }
                                     <Button variant="primary" className="me-2" onClick={handleLogOut}>LogOut</Button>
                                     <Button variant="outline-info" className="me-2">{username}</Button>

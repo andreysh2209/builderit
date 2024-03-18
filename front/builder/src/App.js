@@ -13,6 +13,8 @@ import AddWorkType from "./Components/AddWorkType";
 import AddMaterial from "./Components/AddMaterial";
 import AddCategoryMaterial from "./Components/AddCategoryMaterial";
 import AddSubCategoryMaterial from "./Components/AddSubCategoryMaterial";
+import PanelUser from "./Components/PanelUser";
+import AddApartment from "./Components/AddApartment";
 
 function App() {
   return (
@@ -22,12 +24,14 @@ function App() {
           <Route exact path="/" element={<Home/>}/>
           <Route exact path="/link" element={<Link/>}/>
           <Route exact path="/admin" element={<PanelAdmin/>}/>
+          <Route exact path="/panelUser" element={<PanelUser/>}/>
           <Route exact path="/addWorkGroup" element={<AddWorkGroup/>}/>
           <Route exact path="/addSubWorkGroup" element={<AddSubWorkGroup/>}/>
           <Route exact path="/addWorkType" element={<AddWorkType/>}/>
           <Route exact path="/addMaterial" element={<AddMaterial/>}/>
           <Route exact path="/addCategoryMaterial" element={<AddCategoryMaterial/>}/>
           <Route exact path="/addSubCategoryMaterial" element={<AddSubCategoryMaterial/>}/>
+          <Route exact path="/addApartment" element={<AddApartment/>}/>
         </Routes>
       </Router>
   );

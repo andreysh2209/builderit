@@ -7,14 +7,23 @@ function AddApartment(props) {
     const [name, setName] = useState("");
     const [rooms, setRooms] = useState([]);
     const [show, setShow] = useState(false);
-    const [roomTypes,setRoomTypes]=useState([])
-    const [roomType,setRoomType]=useState()
-    const [width, setWidth]=useState(0)
-    const [length, setLength]=useState(0)
-    const [height, setHeight]=useState(0)
+    const [showDoor, setShowDoor] = useState(false);
+    const [roomTypes, setRoomTypes] = useState([])
+    const [roomType, setRoomType] = useState()
+    const [width, setWidth] = useState(0)
+    const [widthDoor, setWidthDoor] = useState(0)
+    const [length, setLength] = useState(0)
+    const [height, setHeight] = useState(0)
+    const [heightDoor, setHeightDoor] = useState(0)
+    const [addedRoms, setAddedRooms] = useState([])
+    const [addedDoors, setAddedDoors] = useState([])
     const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true)
+    };
+    const handleCloseDoor = () => setShowDoor(false);
+    const handleShowDoor = () => {
+        setShowDoor(true)
     };
 
     useEffect(() => {
@@ -37,7 +46,30 @@ function AddApartment(props) {
 
 
     function handleAddRoom() {
+        const room = {
+            roomType: roomType,
+            width: width,
+            length: length,
+            height: height,
+            doors: addedDoors
+        };
+        addedRoms.push(room)
+        setAddedDoors([])
+        setShow(false)
 
+    }
+
+    function handleAddDoor() {
+        const door = {
+            width: widthDoor,
+            height: heightDoor
+        };
+        addedDoors.push(door)
+        setShowDoor(false)
+    }
+
+    function handleAddApartment() {
+        console.log(addedRoms)
     }
 
     return (
@@ -67,63 +99,29 @@ function AddApartment(props) {
 
                             </tr>
                             </thead>
-                            {/*<tbody> {products.map((d) => (*/}
-                            {/*    <tr key={d.id}>*/}
-                            {/*        <td>{d.name}</td>*/}
-                            {/*        <td>{d.description}</td>*/}
-                            {/*        <td>{d.price}</td>*/}
-                            {/*        <td>{d.cost}</td>*/}
-                            {/*        <td>{d.price-d.cost}</td>*/}
-                            {/*        <td>{(d.price-d.cost)/d.price*100}</td>*/}
-                            {/*        <td>*/}
-                            {/*            {d.active*/}
-                            {/*                ? <img*/}
-                            {/*                    src={yesImg}*/}
-                            {/*                    height="30"*/}
-                            {/*                    width="60"*/}
-                            {/*                    className='d-inline-block align-top mx-3'*/}
-                            {/*                    alt="Logo"*/}
-                            {/*                />*/}
-                            {/*                :<img*/}
-                            {/*                    src={noImg}*/}
-                            {/*                    height="30"*/}
-                            {/*                    width="60"*/}
-                            {/*                    className='d-inline-block align-top mx-3'*/}
-                            {/*                    alt="Logo"*/}
-                            {/*                />*/}
-                            {/*            }*/}
-                            {/*        </td>*/}
-                            {/*        <td>*/}
-                            {/*            {d.imageId==null*/}
-                            {/*                ? <Button variant="primary" onClick={(e) => {*/}
-                            {/*                    setId(d.id)*/}
-                            {/*                    handleShow()*/}
-                            {/*                }}>Добавить изображение</Button>*/}
-                            {/*                :<MyImg imageId={d.imageId}/>*/}
-                            {/*            }*/}
-                            {/*        </td>*/}
-                            {/*        <td>*/}
-                            {/*            <Button variant="primary" onClick={(e) => {*/}
+                            <tbody> {addedRoms.map((d) => (
+                                <tr>
+                                    <td>{d.roomType}</td>
+                                    <td>{d.width}</td>
+                                    <td>{d.length}</td>
+                                    <td>{d.height}</td>
+                                    <td></td>
+                                    <td></td>
 
-                            {/*                productId = d.id*/}
-                            {/*                setId(d.id);*/}
-                            {/*                setAddedComponents([])*/}
-                            {/*                handleShowChange()*/}
-                            {/*            }}>Корректировать</Button>*/}
-                            {/*        </td>*/}
-
-                            {/*    </tr>*/}
-                            {/*))}*/}
-                            {/*</tbody>*/}
+                                </tr>
+                            ))}
+                            </tbody>
                         </Table>
 
                         <Button variant="primary" onClick={handleShow}>+ room</Button>
                     </Form>
+                    <br/>
+                    <Button onClick={handleAddApartment}>Add Apartment</Button>
                 </Col>
             </Row>
             <Modal show={show} onHide={handleClose} size={"lg"}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Component</Modal.Title>
+                    <Modal.Title>Add Room</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -152,14 +150,64 @@ function AddApartment(props) {
                             <Form.Control type="number" min="0" step="0.01" placeholder="Enter Height"
                                           onChange={(e) => setHeight(e.target.value)}/>
                         </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPrice">
+                            <Form.Label>Doors</Form.Label>
+                            <Table striped bordered hover>
+                                <thead>
+                                <tr>
+                                    <th>Width</th>
+                                    <th>Height</th>
+                                    <th><Button onClick={handleShowDoor}>+</Button></th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody> {addedDoors.map((d) => (
+                                    <tr>
+                                        <td>{d.width}</td>
+                                        <td>{d.height}</td>
+                                        <td></td>
+
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </Table>
+                        </Form.Group>
                         <br/>
+
                         <Button variant="primary" onClick={handleAddRoom}>
                             Add Room
                         </Button>
                     </Form>
                 </Modal.Body>
             </Modal>
-            </>
+            <Modal show={showDoor} onHide={handleCloseDoor} size={"lg"}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Door</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+
+                        <Form.Group className="mb-3" controlId="formBasicPrice">
+                            <Form.Label>Width</Form.Label>
+                            <Form.Control type="number" min="0" step="0.01" placeholder="Enter Width"
+                                          onChange={(e) => setWidthDoor(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPrice">
+                            <Form.Label>Height</Form.Label>
+                            <Form.Control type="number" min="0" step="0.01" placeholder="Enter Height"
+                                          onChange={(e) => setHeightDoor(e.target.value)}/>
+                        </Form.Group>
+
+                        <br/>
+
+                        <Button variant="primary" onClick={handleAddDoor}>
+                            Add Door
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+        </>
     );
 }
 
